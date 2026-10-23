@@ -1,60 +1,28 @@
 package com.nubank.DesafioNubank.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 public class Client {
 
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String Name;
-    private String Email;
-    private Long Telefone;
 
-    @OneToMany(
-            mappedBy = "Client",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "Clientes", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Object> contatos = new ArrayList<>();
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
-    }
-
-    public Long getTelefone() {
-        return Telefone;
-    }
-
-    public void setTelefone(Long telefone) {
-        Telefone = telefone;
-    }
 }
